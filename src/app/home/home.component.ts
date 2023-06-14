@@ -37,12 +37,40 @@ export class HomeComponent {
     if(prod.qnt != 5){
       prod.qnt += 1
     }
-    console.log(prod.qnt)
+    //console.log(prod.qnt)
   }
   dec(prod:any){
     if(prod.qnt != 1){
       prod.qnt -= 1
     }
 
+  }
+  itemsCart:any[] = [];
+  addCart(category:any){
+    //console.log(category)
+    let cartDataNull = localStorage.getItem('localCart')
+    if(cartDataNull == null){
+      let storeDataGet: any = []
+      storeDataGet.push(category)
+      localStorage.setItem('localCart', JSON.stringify(storeDataGet));
+    }else{
+      var id = category.prodId;
+      let index:number = -1;
+      this.itemsCart = JSON.parse(localStorage.getItem('localCart')|| '{}');
+      for(let i=0; i<this.itemsCart.length; i++){
+        if(parseInt(id) === parseInt(this.itemsCart[i].prodId)){
+          this.itemsCart[i].qnt = category.qnt;
+          index = i;
+          break;
+        }
+      }
+      if(index == -1){
+        this.itemsCart.push(category)
+        localStorage.setItem('localCart', JSON.stringify(this.itemsCart))
+      }else {
+        localStorage.setItem('localCart', JSON.stringify(this.itemsCart))
+      }
+    }
+    localStorage.setItem('localCart', JSON.stringify(category))
   }
 }
