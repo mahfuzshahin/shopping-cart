@@ -45,19 +45,22 @@ export class HomeComponent {
     }
 
   }
-  itemsCart:any[] = [];
+  itemsCart:any = [];
   addCart(category:any){
     //console.log(category)
     let cartDataNull = localStorage.getItem('localCart')
+
     if(cartDataNull == null){
-      let storeDataGet: any = []
+      let storeDataGet: any = [];
       storeDataGet.push(category)
       localStorage.setItem('localCart', JSON.stringify(storeDataGet));
     }else{
       var id = category.prodId;
       let index:number = -1;
       this.itemsCart = JSON.parse(localStorage.getItem('localCart')|| '{}');
+
       for(let i=0; i<this.itemsCart.length; i++){
+
         if(parseInt(id) === parseInt(this.itemsCart[i].prodId)){
           this.itemsCart[i].qnt = category.qnt;
           index = i;
@@ -65,8 +68,8 @@ export class HomeComponent {
         }
       }
       if(index == -1){
-        this.itemsCart.push(category)
-        localStorage.setItem('localCart', JSON.stringify(this.itemsCart))
+        this.itemsCart.push(category);
+        localStorage.setItem('localCart', JSON.stringify(this.itemsCart));
       }else {
         localStorage.setItem('localCart', JSON.stringify(this.itemsCart))
       }
